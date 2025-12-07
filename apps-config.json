@@ -1,0 +1,55 @@
+{
+  "options": {
+    "InstallPowerShell7": true,
+    "RunDebloat": true,
+    "RunOptimize": true
+  },
+  "debloat": {
+    "removeXbox": true,
+    "removeBing": true,
+    "removeClipchamp": true,
+    "extraAppxPatterns": []
+  },
+  "apps": [
+    {
+      "name": "Google Chrome",
+      "id": "Google.Chrome",
+      "enabled": true
+    },
+    {
+      "name": "Discord",
+      "id": "Discord.Discord",
+      "enabled": true
+    },
+    {
+      "name": "Steam",
+      "id": "Valve.Steam",
+      "enabled": true
+    },
+    {
+      "name": "Visual Studio Code",
+      "id": "Microsoft.VisualStudioCode",
+      "enabled": true
+    },
+    {
+      "name": "Git",
+      "id": "Git.Git",
+      "enabled": true
+    },
+    {
+      "name": "7-Zip",
+      "id": "7zip.7zip",
+      "enabled": true
+    },
+    {
+      "name": "OBS Studio",
+      "id": "OBSProject.OBSStudio",
+      "enabled": false
+    },
+    {
+      "name": "HWMonitor",
+      "id": "CPUID.HWMonitor",
+      "enabled": false
+    }
+  ]
+}
