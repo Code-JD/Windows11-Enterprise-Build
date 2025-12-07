@@ -1,0 +1,2 @@
+# Windows11-Enterprise-Build
+WIndows 11 baseline build with debloat, app install, and optimization scripts.
