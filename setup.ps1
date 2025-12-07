@@ -57,7 +57,7 @@ if ($config.options.InstallPowerShell7 -eq $true) {
 
 # --- 6. GitHub raw URLs for scripts ---
 # IMPORTANT: change YOUR-GITHUB-USERNAME and repo/branch to match your setup.
-$baseUrl = "https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/Windows11-Enterprise-Build/main/scripts"
+$baseUrl = "https://raw.githubusercontent.com/Code-JD/Windows11-Enterprise-Build/main/scripts"
 
 $scripts = @{
     "debloat.ps1"     = "$baseUrl/debloat.ps1"
