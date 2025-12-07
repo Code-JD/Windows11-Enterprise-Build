@@ -75,11 +75,15 @@ foreach ($name in $scripts.Keys) {
     $url  = $scripts[$name]
     $dest = Join-Path $scriptFolder $name
 
-    Write-Host "Downloading $name from $url..." -ForegroundColor Yellow
-    try {
-        Invoke-WebRequest -Uri $url -OutFile $dest -UseBasicParsing
-    } catch {
-        Write-Warning "Failed to download $name from $url. Error: $_"
+    Write-Host "Downloading $name using curl..." -ForegroundColor Yellow
+
+    $cmd = "curl.exe -L `"$url`" -o `"$dest`""
+    Invoke-Expression $cmd
+
+    if (-not (Test-Path $dest) -or (Get-Item $dest).Length -eq 0) {
+        Write-Warning "$name failed to download (file missing or empty)."
+    } else {
+        Write-Host "$name downloaded successfully." -ForegroundColor Green
     }
 }
 
