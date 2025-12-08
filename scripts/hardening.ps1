@@ -125,3 +125,111 @@ Enable-ASRRule -RuleId "BE9BA2D9-53EA-4CDC-84E5-9B1EEEE46550" -Mode "1"
 # Block LSASS credential dump is already enabled above
 
 Write-Host "ASR Balanced Profile Applied." -ForegroundColor Green
+
+# ==========================================
+# Phase 3: PowerShell Logging & Security Auditing (Full)
+# ==========================================
+
+Write-Host "Configuring PowerShell logging and security auditing (Full)..." -ForegroundColor Cyan
+
+# --- Ensure registry paths exist for Logging policies ---
+$psLogPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell"
+if (-not (Test-Path $psLogPath)) {
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "PowerShell" -Force | Out-Null
+}
+
+$scriptBlockPath = Join-Path $psLogPath "ScriptBlockLogging"
+if (-not (Test-Path $scriptBlockPath)) {
+    New-Item -Path $psLogPath -Name "ScriptBlockLogging" -Force | Out-Null
+}
+
+$moduleLoggingPath = Join-Path $psLogPath "ModuleLogging"
+if (-not (Test-Path $moduleLoggingPath)) {
+    New-Item -Path $psLogPath -Name "ModuleLogging" -Force | Out-Null
+}
+
+$transcriptionPath = Join-Path $psLogPath "Transcription"
+if (-not (Test-Path $transcriptionPath)) {
+    New-Item -Path $psLogPath -Name "Transcription" -Force | Out-Null
+}
+
+# --- Script Block Logging (captures all PowerShell script contents) ---
+Write-Host "Enabling PowerShell Script Block Logging..." -ForegroundColor Yellow
+Set-ItemProperty -Path $scriptBlockPath -Name "EnableScriptBlockLogging" -Value 1 -Force
+Set-ItemProperty -Path $scriptBlockPath -Name "EnableScriptBlockInvocationLogging" -Value 1 -Force
+
+# --- Module Logging (what modules and commands are used) ---
+Write-Host "Enabling PowerShell Module Logging..." -ForegroundColor Yellow
+Set-ItemProperty -Path $moduleLoggingPath -Name "EnableModuleLogging" -Value 1 -Force
+
+$moduleNamesPath = Join-Path $moduleLoggingPath "ModuleNames"
+if (-not (Test-Path $moduleNamesPath)) {
+    New-Item -Path $moduleLoggingPath -Name "ModuleNames" -Force | Out-Null
+}
+# Log all modules
+New-ItemProperty -Path $moduleNamesPath -Name "*" -Value "*" -PropertyType String -Force | Out-Null
+
+# --- Transcription Logging (full console history) ---
+# NOTE: This can generate a lot of logs, but is amazing for learning & investigations.
+Write-Host "Enabling PowerShell Transcription Logging..." -ForegroundColor Yellow
+
+$transcriptDir = "C:\PowerShell-Transcripts"
+if (-not (Test-Path $transcriptDir)) {
+    New-Item -Path $transcriptDir -ItemType Directory -Force | Out-Null
+}
+
+Set-ItemProperty -Path $transcriptionPath -Name "EnableTranscripting" -Value 1 -Force
+Set-ItemProperty -Path $transcriptionPath -Name "OutputDirectory" -Value $transcriptDir -Force
+Set-ItemProperty -Path $transcriptionPath -Name "EnableInvocationHeader" -Value 1 -Force
+
+Write-Host "PowerShell logging configured. Transcripts will be written to $transcriptDir" -ForegroundColor Green
+
+# ==========================================
+# Advanced Security Auditing (Full)
+# ==========================================
+
+Write-Host "Enabling advanced Windows security auditing..." -ForegroundColor Cyan
+
+# Helper function to run auditpol safely
+function Set-AuditPolicy {
+    param (
+        [string]$Subcategory,
+        [string]$Setting
+    )
+
+    Write-Host "  - $Subcategory → $Setting" -ForegroundColor Yellow
+    auditpol.exe /set /subcategory:"$Subcategory" /success:$Setting /failure:$Setting | Out-Null
+}
+
+# --- Logon/Logoff ---
+Set-AuditPolicy "Logon"                      "enable"
+Set-AuditPolicy "Logoff"                     "enable"
+Set-AuditPolicy "Account Lockout"            "enable"
+Set-AuditPolicy "Special Logon"              "enable"
+
+# --- Account Management ---
+Set-AuditPolicy "User Account Management"    "enable"
+Set-AuditPolicy "Security Group Management"  "enable"
+
+# --- Privilege Use & Policy Change ---
+Set-AuditPolicy "Sensitive Privilege Use"    "enable"
+Set-AuditPolicy "Audit Policy Change"        "enable"
+Set-AuditPolicy "Authentication Policy Change" "enable"
+
+# --- Process & Script Activity ---
+Set-AuditPolicy "Process Creation"           "enable"
+Set-AuditPolicy "Process Termination"        "enable"
+Set-AuditPolicy "Filtering Platform Connection" "enable"
+
+# --- Object Access (basic, not super chatty) ---
+Set-AuditPolicy "File System"                "enable"
+Set-AuditPolicy "Registry"                   "enable"
+
+# --- System Integrity ---
+Set-AuditPolicy "Security State Change"      "enable"
+Set-AuditPolicy "Security System Extension"  "enable"
+Set-AuditPolicy "System Integrity"           "enable"
+
+Write-Host "Advanced auditing enabled. Review logs in Event Viewer → Windows Logs / Security & Application." -ForegroundColor Green
+
+Write-Host "Phase 3 (Logging & Auditing) complete. Reboot recommended." -ForegroundColor Cyan
