@@ -79,3 +79,49 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection
 # --- Confirm Completion ---
 Write-Host "Phase 1 Hardening Complete." -ForegroundColor Green
 Write-Host "Reboot recommended before continuing to Phase 2." -ForegroundColor Cyan
+
+# ==========================================
+# Phase 2: Attack Surface Reduction (Balanced Mode)
+# ==========================================
+
+Write-Host "Applying Attack Surface Reduction (ASR) rules..." -ForegroundColor Cyan
+
+function Enable-ASRRule {
+    param (
+        [string]$RuleId,
+        [string]$Mode
+    )
+    Write-Host "Enabling ASR Rule: $RuleId ($Mode)" -ForegroundColor Yellow
+    Add-MpPreference -AttackSurfaceReductionRules_Ids $RuleId -AttackSurfaceReductionRules_Actions $Mode
+}
+
+# --- Balanced ASR Rules ---
+# 1. Block executable content from email/web
+Enable-ASRRule -RuleId "D4F940AB-401B-4EFC-AADC-AD5F3C50688A" -Mode "1"  # Block
+
+# 2. Block Office from injecting code into other processes
+Enable-ASRRule -RuleId "75668C1F-73B5-4CF0-BB93-3ECF5CB7CC84" -Mode "1"
+
+# 3. Block Office from creating child processes
+Enable-ASRRule -RuleId "D4F940AB-401B-4EFC-AADC-AD5F3C50688B" -Mode "1"
+
+# 4. Block untrusted and unsigned processes from USB
+Enable-ASRRule -RuleId "B2B3F03D-6A65-4F7B-A9C7-1C7EFE8C28D4" -Mode "1"
+
+# 5. Block credential stealing from LSASS
+Enable-ASRRule -RuleId "9E6F0A0B-CE3B-4BFE-8F22-7ED507D96E6B" -Mode "1"
+
+# 6. Block process creation from suspicious script files
+Enable-ASRRule -RuleId "5BEB7EFE-FD9A-4556-801D-275E5FFC04CC" -Mode "1"
+
+# 7. Block executable content from OneNote (modern attack vector)
+Enable-ASRRule -RuleId "BE9BA2D9-53EA-4CDC-84E5-9B1EEEE46550" -Mode "1"
+
+# --- RULES WE AVOID (these break VS Code, Steam, gaming, installers) ---
+# Block Win32 API calls from Office (breaks macros)
+# Block child processes from scripts (breaks installers)
+# Block all Office macros (annoying for non-Office users)
+# Block remote Office files (breaks SharePoint users)
+# Block LSASS credential dump is already enabled above
+
+Write-Host "ASR Balanced Profile Applied." -ForegroundColor Green
