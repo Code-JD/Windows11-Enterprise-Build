@@ -261,8 +261,8 @@ If you'd like to discuss this project or my learning journey, feel free to reach
 
 If you’d like to connect or provide feedback:
 
-- **LinkedIn:** *(add link after we build your post)*
-- **Medium:** *(add link after article publish)*
+- **LinkedIn:**https://www.linkedin.com/posts/jonathan-herring-code_i-just-completed-a-full-homelab-project-where-activity-7403858278130311168-p6WC/?rcm=ACoAAC3_5gsBUR9cBNarPSf3OHdO9cYIF4kDSe0
+- **Medium:**https://medium.com/@jonathan.d.herring/turning-my-gaming-pc-into-an-enterprise-hardened-windows-11-workstation-homelab-project-523f52fe5054
 - **GitHub:** https://github.com/Code-JD
 
 Feedback from IT, cybersecurity, and cloud professionals is always appreciated.
