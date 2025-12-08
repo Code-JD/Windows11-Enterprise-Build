@@ -1,32 +1,14 @@
-# Windows 11 Enterprise Build & Hardening Project
+# Project Overview
 
-This repository documents my custom Windows 11 build workflow and automated hardening scripts.
-The purpose of the project is to:
+This HomeLab project rebuilds and hardens a Windows 11 workstation to simulate how an organization would secure and manage employee endpoints.
 
-- Learn professional systems administration practices
-- Automate workstation builds and configuration
-- Apply enterprise-grade hardening policies
-- Build a portfolio demonstrating technical proficiency
-- Develop repeatable infrastructure-as-code patterns
+The goals of the project are to:
 
-## Project Objectives
-- Create a fully automated Windows 11 bootstrap script
-- Implement debloating, optimization, and application provisioning
-- Apply CIS-aligned hardening controls
-- Document processes, troubleshooting, and decision-making
-- Track progress through Git versioning and pull requests
+- Learn and apply enterprise-grade security controls
+- Write automation using PowerShell
+- Implement repeatable system configuration
+- Use Git and documentation workflows used by real IT teams
+- Produce logs suitable for SOC-style investigations
+- Build portfolio-ready material for IT/cybersecurity roles
 
-## Repository Structure
-/scripts → PowerShell automation scripts
-/config → JSON / YAML configuration files
-/docs → Documentation, notes, plans, and changelog
-/logs → Execution logs and validation reports
-
-
-## Tools Used
-- Windows 11 Enterprise
-- PowerShell 7
-- Git + GitHub
-- VS Code
-- winget
-- Local homelab environment
+The system remains fully functional for gaming and development while following industry security practices.

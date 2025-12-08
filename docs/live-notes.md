@@ -35,3 +35,41 @@ Status: **Resolved**
 ---
 
 *(New entries will be added as work continues)*
+---
+
+# 📘 Structured Live Notes (Continued)
+
+Below is the ongoing structured section for future troubleshooting, discoveries, fixes, and behaviors observed during this HomeLab build.
+
+Use these categories for each entry:
+
+---
+
+## 🕒 Timestamp
+`YYYY-MM-DD — HH:MM`
+
+## 🧪 Action Taken
+Describe the command, script, or task performed.
+
+## ❗ Issue Observed
+What unexpected behavior happened?
+
+## 🔍 Troubleshooting Steps
+Commands, logs viewed, or changes attempted.
+
+## ✅ Resolution
+What fixed the issue.
+
+## 💡 Notes / Lessons Learned
+Takeaways for future builds.
+
+---
+
+### Template Example
+
+🕒 2025-02-11 — 19:42
+🧪 Ran hardening.ps1 Phase 3.
+❗ Script reported missing registry path for ModuleLogging.
+🔍 Created HKLM:...\ModuleLogging manually.
+✅ Re-ran script, completed successfully.
+💡 In future builds, ensure registry paths exist before setting properties.
