@@ -53,9 +53,15 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Edge\SmartScreenEnabled" -Name 
 Write-Host "Disabling Advertising ID..." -ForegroundColor Yellow
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo" -Name Enabled -Value 0 -Force
 
-# --- Disable Consumer Experiences ---
+# --- Disable Consumer Experiences Safely ---
 Write-Host "Disabling Consumer Experience Content..." -ForegroundColor Yellow
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" -Name DisableConsumerFeatures -Value 1 -Force
+
+$cloudContentPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent"
+if (-not (Test-Path $cloudContentPath)) {
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows" -Name "CloudContent" -Force | Out-Null
+}
+
+Set-ItemProperty -Path $cloudContentPath -Name DisableConsumerFeatures -Value 1 -Force
 
 # --- Disable Tips and Suggestions ---
 Write-Host "Disabling Windows Tips..." -ForegroundColor Yellow
