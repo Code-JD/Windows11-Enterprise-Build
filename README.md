@@ -220,8 +220,6 @@ The goal is to demonstrate practical capability to future employers.
 | PowerShell Transcripts Folder | *(Add screenshot)* |
 | Event Viewer (Security Logs) | *(Add screenshot)* |
 
-Upload images to your repo under `/docs/images/` and link them above.
-
 ## 🗺️ Roadmap
 
 - [ ] **Phase 4 — Firewall Hardening (balanced outbound allowlist)**
