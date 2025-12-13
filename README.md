@@ -30,8 +30,7 @@ A HomeLab project to rebuild and harden a Windows 11 workstation using **PowerSh
     - [**PowerShell Transcripts**](#powershell-transcripts)
     - [**Event Viewer Locations**](#event-viewer-locations)
   - [🎯 Learning Outcomes](#-learning-outcomes)
-  - [🖼️ Screenshots](#️-screenshots)
-  - [🗺️ Roadmap](#️-roadmap)
+  - [�️ Roadmap](#️-roadmap)
   - [📣 Feedback](#-feedback)
   - [🧑‍💼 For Hiring Managers](#-for-hiring-managers)
   - [📫 Contact](#-contact)
@@ -208,17 +207,6 @@ This project provides hands-on experience in:
 
 The goal is to demonstrate practical capability to future employers.
 
-## 🖼️ Screenshots
-
-> Visual snapshots of the system after applying hardening and logging.
-
-| Description | Image |
-|------------|-------|
-| PowerShell Hardening Script Running | *(Add screenshot here)* |
-| Defender Settings After Phase 1 | *(Add screenshot)* |
-| ASR Rules Enabled (Balanced Mode) | *(Add screenshot)* |
-| PowerShell Transcripts Folder | *(Add screenshot)* |
-| Event Viewer (Security Logs) | *(Add screenshot)* |
 
 ## 🗺️ Roadmap
 
